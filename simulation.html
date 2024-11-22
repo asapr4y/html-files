@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IT0019 Simulation</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    .container {
+      margin-top: 30px;
+    }
+    .row > .col-md-6 {
+      padding: 20px;
+    }
+    .row > .col-md-6:not(:last-child) {
+      border-right: 1px solid #ccc;
+    }
+    .result {
+      font-size: 24px;
+      margin-top: 20px;
+    }
+    .emoji {
+      font-size: 32px;
+      margin-top: 10px;
+    }
+    .coefficient {
+      font-weight: bold;
+    }
+    .form-control {
+      text-align: right;
+      width: 100px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .btn {
+      width: 40%;
+    }
+    .intercept {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .banner {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .form-group label {
+      font-size: 12px;
+  }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="text-center">Pandemic Stressor Simulation</h1>
+    <p class="text-center banner">How much did you relate to or experience the following during the pandemic? </p> 
+    <p class="text-center banner">Enter an input from 1 (Lowest) to 5 (Highest) and get a Mental Health Score based on our regression model!</p>
+    <div class="row">
+      <!-- firstmodel left -->
+      <div class="col-md-6">
+        <h3 class="text-center">Early Pandemic</h3>
+        <p class="text-center intercept">Intercept: 2.9236</p>
+        <form id="regressionForm1">
+          <div class="form-group row justify-content-center">
+            <label for="x1_1" class="col-sm-3 col-form-label text-right">Anxiety</label>
+            <div class="col-sm-3">
+              <input type="number" id="x1_1" class="form-control" required>
+            </div>
+            <div class="col-sm-2">
+              <span class="coefficient">-0.3899</span>
+            </div>
+          </div>
+          <div class="form-group row justify-content-center">
+            <label for="x2_1" class="col-sm-3 col-form-label text-right">Loneliness</label>
+            <div class="col-sm-3">
+              <input type="number" id="x2_1" class="form-control" required>
+            </div>
+            <div class="col-sm-2">
+              <span class="coefficient">-0.0266</span>
+            </div>
+          </div>
+          <div class="form-group row justify-content-center">
+            <label for="x3_1" class="col-sm-3 col-form-label text-right">News Stress</label>
+            <div class="col-sm-3">
+              <input type="number" id="x3_1" class="form-control" required>
+            </div>
+            <div class="col-sm-2">
+              <span class="coefficient">-0.0425</span>
+            </div>
+          </div>
+          <div class="form-group row justify-content-center">
+            <label for="x4_1" class="col-sm-3 col-form-label text-right">Socializing</label>
+            <div class="col-sm-3">
+              <input type="number" id="x4_1" class="form-control" required>
+            </div>
+            <div class="col-sm-2">
+              <span class="coefficient">0.2858</span>
+            </div>
+          </div>
+          <div class="form-group row justify-content-center">
+            <label for="x5_1" class="col-sm-3 col-form-label text-right">Physical Activity</label>
+            <div class="col-sm-3">
+              <input type="number" id="x5_1" class="form-control" required>
+            </div>
+            <div class="col-sm-2">
+              <span class="coefficient">0.2658</span>
+            </div>
+          </div>
+          <div class="form-group row justify-content-center">
+            <button type="button" class="btn btn-primary" onclick="calculateRegression1()">Calculate</button>
+          </div>
+        </form>
+        <h2 class="text-center mt-4">Predicted Y:</h2>
+        <p id="result1" class="text-center result"></p>
+        <p id="emoji1" class="text-center emoji"></p>
+      </div>
+
+      <!-- 2ndmodel, right -->
+      <div class="col-md-6">
+        <h3 class="text-center">Mid Pandemic</h3>
+        <p class="text-center intercept">Intercept: 3.1839</p>
+        <form id="regressionForm2">
+          <div class="form-group row justify-content-center">
+            <label for="x1_2" class="col-sm-3 col-form-label text-right">Anxiety</label>
+            <div class="col-sm-3">
+              <input type="number" id="x1_2" class="form-control" required>
+            </div>
+            <div class="col-sm-2">
+              <span class="coefficient">-0.4572</span>
+            </div>
+          </div>
+          <div class="form-group row justify-content-center">
+            <label for="x2_2" class="col-sm-3 col-form-label text-right">Loneliness</label>
+            <div class="col-sm-3">
+              <input type="number" id="x2_2" class="form-control" required>
+            </div>
+            <div class="col-sm-2">
+              <span class="coefficient">-0.5488</span>
+            </div>
+          </div>
+          <div class="form-group row justify-content-center">
+            <label for="x3_2" class="col-sm-3 col-form-label text-right">News Stress</label>
+            <div class="col-sm-3">
+              <input type="number" id="x3_2" class="form-control" required>
+            </div>
+            <div class="col-sm-2">
+              <span class="coefficient">0.5279</span>
+            </div>
+          </div>
+          <div class="form-group row justify-content-center">
+            <label for="x4_2" class="col-sm-3 col-form-label text-right">Socializing</label>
+            <div class="col-sm-3">
+              <input type="number" id="x4_2" class="form-control" required>
+            </div>
+            <div class="col-sm-2">
+              <span class="coefficient">0.1630</span>
+            </div>
+          </div>
+          <div class="form-group row justify-content-center">
+            <label for="x5_2" class="col-sm-3 col-form-label text-right">Physical Activity</label>
+            <div class="col-sm-3">
+              <input type="number" id="x5_2" class="form-control" required>
+            </div>
+            <div class="col-sm-2">
+              <span class="coefficient">0.1487</span>
+            </div>
+          </div>
+          <div class="form-group row justify-content-center">
+            <button type="button" class="btn btn-primary" onclick="calculateRegression2()">Calculate</button>
+          </div>
+        </form>
+        <h2 class="text-center mt-4">Predicted Y:</h2>
+        <p id="result2" class="text-center result"></p>
+        <p id="emoji2" class="text-center emoji"></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    const coefficients1 = {
+      intercept: 2.923554735,
+      x1: -0.389994425,
+      x2: -0.026602814,
+      x3: -0.0425337,
+      x4: 0.285785503,
+      x5: 0.265841434
+    };
+
+    const coefficients2 = {
+      intercept: 3.183894152,
+      x1: -0.457173748,
+      x2: -0.548764364,
+      x3: 0.527869339,
+      x4: 0.163012254,
+      x5: 0.148745909
+    };
+
+    const getEmoji = (y) => {
+      if (y < 1.5) return "😢 Overall Mental Health Score: Low";
+      if (y < 2.5) return "😟 Overall Mental Health Score: Moderately Low";
+      if (y < 3.5) return "😐 Overall Mental Health Score: Medium";
+      if (y < 4.5) return "🙂 Overall Mental Health Score: Moderately High";
+      return "😄 Overall Mental Health Score: High";
+    };
+
+    function calculateRegression1() {
+      const x1 = parseFloat(document.getElementById('x1_1').value) || 0;
+      const x2 = parseFloat(document.getElementById('x2_1').value) || 0;
+      const x3 = parseFloat(document.getElementById('x3_1').value) || 0;
+      const x4 = parseFloat(document.getElementById('x4_1').value) || 0;
+      const x5 = parseFloat(document.getElementById('x5_1').value) || 0;
+
+      const y = coefficients1.intercept + (x1 * coefficients1.x1) + (x2 * coefficients1.x2) + (x3 * coefficients1.x3) + (x4 * coefficients1.x4) + (x5 * coefficients1.x5);
+
+      document.getElementById('result1').innerText = y.toFixed(5);
+      document.getElementById('emoji1').innerText = getEmoji(y);
+    }
+
+    function calculateRegression2() {
+      const x1 = parseFloat(document.getElementById('x1_2').value) || 0;
+      const x2 = parseFloat(document.getElementById('x2_2').value) || 0;
+      const x3 = parseFloat(document.getElementById('x3_2').value) || 0;
+      const x4 = parseFloat(document.getElementById('x4_2').value) || 0;
+      const x5 = parseFloat(document.getElementById('x5_2').value) || 0;
+
+      const y = coefficients2.intercept + (x1 * coefficients2.x1) + (x2 * coefficients2.x2) + (x3 * coefficients2.x3) + (x4 * coefficients2.x4) + (x5 * coefficients2.x5);
+
+      document.getElementById('result2').innerText = y.toFixed(5);
+      document.getElementById('emoji2').innerText = getEmoji(y);
+    }
+  </script>
+</body>
+</html>
